@@ -34,6 +34,22 @@ KEY_MAP[STATE_RIGHT] = [KEY_RIGHT_UP, KEY_RIGHT_DOWN];
 KEY_MAP[STATE_DOWN] = [KEY_DOWN_LEFT, KEY_DOWN_RIGHT];
 KEY_MAP[STATE_LEFT] = [KEY_LEFT_UP, KEY_LEFT_DOWN];
 
+var STATE_MAP = new Array();
+STATE_MAP[STATE_UP] = [STATE_UP_LEFT, STATE_UP_RIGHT];
+STATE_MAP[STATE_RIGHT] = [STATE_RIGHT_UP, STATE_RIGHT_DOWN];
+STATE_MAP[STATE_DOWN] = [STATE_DOWN_LEFT, STATE_DOWN_RIGHT];
+STATE_MAP[STATE_LEFT] = [STATE_LEFT_UP, STATE_LEFT_DOWN];
+
+var MINOR_MAP = new Array();
+MINOR_MAP[STATE_UP_LEFT] = KEY_UP_LEFT;
+MINOR_MAP[STATE_UP_RIGHT] = KEY_UP_RIGHT;
+MINOR_MAP[STATE_RIGHT_UP] = KEY_RIGHT_UP;
+MINOR_MAP[STATE_RIGHT_DOWN] = KEY_RIGHT_DOWN;
+MINOR_MAP[STATE_DOWN_LEFT] = KEY_DOWN_LEFT;
+MINOR_MAP[STATE_DOWN_RIGHT] = KEY_DOWN_RIGHT;
+MINOR_MAP[STATE_LEFT_UP] = KEY_LEFT_UP;
+MINOR_MAP[STATE_LEFT_DOWN] = KEY_LEFT_DOWN;
+
 var key1 = null;
 var key2 = null;
 var state = STATE_ROOT;
@@ -62,7 +78,7 @@ function keyDown(e)
 	// if we're at one of the four major states
 	else if (state < 100)
 	{
-		// If the key pres is in the same direction as the major state, they are inputting the common character
+		// If the key press is in the same direction as the major state, they are inputting the common character
 		if (code == state)
 		{
 			input($('#c-option').val());
@@ -73,23 +89,60 @@ function keyDown(e)
 		// one of the major verticals
 		if (state == STATE_UP || state == STATE_DOWN)
 		{
-			
-			
+			if (code == STATE_LEFT)
+			{
+				updateOptions(STATE_MAP[state][0]);
+				state = STATE_MAP[state][0];
+			}
+			else if (code == STATE_RIGHT)
+			{
+				updateOptions(STATE_MAP[state][1]);
+				state = STATE_MAP[state][1];
+			}
+
 		}
 		// one of the major horizontals
-		else
+		else if (state == STATE_LEFT || state == STATE_RIGHT)
 		{
-			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
-			if (code == state)
+			if (code == STATE_UP)
 			{
-
+				updateOptions(STATE_MAP[state][0]);
+				state = STATE_MAP[state][0];
+			}
+			else if (code == STATE_DOWN)
+			{
+				updateOptions(STATE_MAP[state][1]);
+				state = STATE_MAP[state][1];
 			}
 		}
 	}
 	// if we're in one of the eight minor states
 	else
 	{
-	
+		if (code == STATE_UP)
+		{
+			input(MINOR_MAP[state][0]);
+			updateOptions(STATE_ROOT);
+			state = STATE_ROOT;
+		}
+		else if (code == STATE_RIGHT)
+		{
+			input(MINOR_MAP[state][1]);
+			updateOptions(STATE_ROOT);
+			state = STATE_ROOT;
+		}
+		else if (code == STATE_DOWN)
+		{
+			input(MINOR_MAP[state][2]);
+			updateOptions(STATE_ROOT);
+			state = STATE_ROOT;
+		}
+		else if (code == STATE_LEFT)
+		{
+			input(MINOR_MAP[state][3]);
+			updateOptions(STATE_ROOT);
+			state = STATE_ROOT;
+		}
 	}
 }
 
@@ -108,13 +161,20 @@ function updateOptions(s)
 		// Update "common" letter
 		updateCommon(s);
 	}
-	if (s == STATE_ROOT)
+	// if we are entering the root state
+	else if (s == STATE_ROOT)
 	{
 		key1 = null;
 		key2 = null;
 		$('#l-option').val("");
 		$('#r-option').val("");
+		$('#m-option').val("");
 		updateCommon(STATE_ROOT);
+	}
+	// if we are entering one of the minor states
+	else
+	{
+		$('#m-option').val(makeOptionToString(MINOR_MAP[s]));
 	}
 }
 
