@@ -28,10 +28,11 @@ var KEY_LEFT_DOWN = ['y', 'z', '1', '2'];
 
 var STATE_ROOT = 1000;
 
-var KEY_MAP = {STATE_UP: [KEY_UP_LEFT, KEY_UP_RIGHT],
-			   STATE_RIGHT: [KEY_RIGHT_UP, KEY_RIGHT_DOWN],
-			   STATE_DOWN: [KEY_DOWN_LEFT, KEY_DOWN_RIGHT],
-			   STATE_LEFT: [KEY_LEFT_UP, KEY_LEFT_DOWN]};
+var KEY_MAP = new Array();
+KEY_MAP[STATE_UP] = [KEY_UP_LEFT, KEY_UP_RIGHT];
+KEY_MAP[STATE_RIGHT] = [KEY_RIGHT_UP, KEY_RIGHT_DOWN];
+KEY_MAP[STATE_DOWN] = [KEY_DOWN_LEFT, KEY_DOWN_RIGHT];
+KEY_MAP[STATE_LEFT] = [KEY_LEFT_UP, KEY_LEFT_DOWN];
 
 var key1 = null;
 var key2 = null;
@@ -39,6 +40,7 @@ var state = STATE_ROOT;
 
 function init()
 {
+	console.log(KEY_MAP[STATE_UP]);
 	$(document).keydown(keyDown);
 }
 
@@ -80,7 +82,7 @@ function keyDown(e)
 			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
 			if (code == state)
 			{
-
+				
 			}
 		}
 	}
@@ -98,10 +100,10 @@ function updateOptions(s)
 	{
 		key1 = KEY_MAP[s][0];
 		key2 = KEY_MAP[s][1];
-		
+
 		// We have structured our list and state numbers such that this will always work
-		$('#l-option').val = makeOptionToString(key1);
-		$('#r-option').val = makeOptionToString(key2);
+		$('#l-option').val(makeOptionToString(key1));
+		$('#r-option').val(makeOptionToString(key2));
 	}
 }
 
