@@ -1,0 +1,115 @@
+$(document).ready(init);
+
+var SPACE_CODE = 32;
+
+var STATE_UP = 38;
+var STATE_UP_LEfT = 101;
+var STATE_UP_RIGHT = 102;
+var KEY_UP_LEFT = ['a', 'b', 'c', 'd'];
+var KEY_UP_RIGHT = ['e', 'f', 'g', 'h'];
+
+var STATE_RIGHT = 39;
+var STATE_RIGHT_UP = 201;
+var STATE_RIGHT_DOWN = 202;
+var KEY_RIGHT_UP = ['i', 'j', 'k', 'l'];
+var KEY_RIGHT_DOWN = ['m', 'n', 'o', 'p'];
+
+var STATE_DOWN = 40;
+var STATE_DOWN_LEFT = 301;
+var STATE_DOWN_RIGHT = 302;
+var KEY_DOWN_LEFT = ['u', 'v', 'w', 'x'];
+var KEY_DOWN_RIGHT = ['q', 'r', 's', 't'];
+
+var STATE_LEFT = 37;
+var STATE_LEFT_UP = 401;
+var STATE_LEFT_DOWN = 402;
+var KEY_LEFT_UP = ['3', '4', '5', '6'];
+var KEY_LEFT_DOWN = ['y', 'z', '1', '2'];
+
+var KEY_LIST = [KEY_UP_LEFT, KEY_UP_RIGHT, 
+                KEY_RIGHT_UP, KEY_RIGHT_DOWN, 
+                KEY_DOWN_LEFT, KEY_DOWN_RIGHT,
+                KEY_LEFT_UP, KEY_LEFT_DOWN];
+
+var STATE_ROOT = 1000;
+
+var key1 = null;
+var key2 = null;
+var state = STATE_ROOT;
+
+function init()
+{
+	$(document).keydown(keyDown);
+}
+
+function keyDown(e)
+{	
+	var code = e.keyCode;
+	
+	// if we're at the root state
+	if (state == STATE_ROOT && (code >= STATE_LEFT && code <= STATE_DOWN))
+	{
+		updateOptions(code);
+		state = code;
+		console.log("STATE: " + state);
+	}
+	// center key pressed
+	else if (state == STATE_ROOT && code == SPACE_CODE)
+	{
+
+	}
+	// if we're at one of the four major states
+	else if (state < 100)
+	{
+		// one of the major verticals
+		if (state == STATE_UP || state == STATE_DOWN)
+		{
+			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
+			if (code == state)
+			{
+
+			}
+			else
+			{
+				
+			}
+		}
+		// one of the major horizontals
+		else
+		{
+			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
+			if (code == state)
+			{
+				
+			}
+		}
+	}
+	// if we're in one of the eight minor states
+	else
+	{
+	
+	}
+}
+
+function updateOptions(s)
+{
+	// if it is one of the four major directions
+	if (s < 100)
+	{
+		// We have structured our list and state numbers such that this will always work
+		key1 = KEY_LIST[s];
+		key2 = KEY_LIST[s+1];
+		$('#l-option').val = makeOptionToString(key1);
+		$('#r-option').val = makeOptionToString(key2);
+	}
+}
+
+function input(c)
+{
+	$('#input').val($('#input').val() + c);
+}
+
+function makeOptionToString(a)
+{
+	return a[0] + ' ' + a[1] + ' ' + a[2] + ' ' + a[3];
+}
