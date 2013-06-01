@@ -40,7 +40,6 @@ var state = STATE_ROOT;
 
 function init()
 {
-	console.log(KEY_MAP[STATE_UP]);
 	$(document).keydown(keyDown);
 }
 
@@ -82,7 +81,7 @@ function keyDown(e)
 			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
 			if (code == state)
 			{
-				
+
 			}
 		}
 	}
@@ -104,7 +103,24 @@ function updateOptions(s)
 		// We have structured our list and state numbers such that this will always work
 		$('#l-option').val(makeOptionToString(key1));
 		$('#r-option').val(makeOptionToString(key2));
+
+		// Update "common" letter
+		updateCommon(s);
 	}
+}
+
+function updateCommon(s)
+{
+	// if it's not a major state, just clear out the box and leave
+	if (s > 100)
+	{
+		$('#c-option').val("");
+		return;
+	}
+
+	// Otherwise, let's pick the common letter.
+	// TODO: Actually do this intelligently
+	$('#c-option').val(key1[0]);
 }
 
 function input(c)
