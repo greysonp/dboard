@@ -68,7 +68,7 @@ function keyDown(e)
 			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
 			if (code == state)
 			{
-
+				input($('#c-option').val());
 			}
 			else
 			{
