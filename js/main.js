@@ -2,40 +2,40 @@ $(document).ready(init);
 
 var SPACE_CODE = 32;
 
-var STATE_UP = [38, 0];
-var STATE_UP_LEfT = 101;
+var STATE_UP = 38;
+var STATE_UP_LEFT = 101;
 var STATE_UP_RIGHT = 102;
 var KEY_UP_LEFT = ['a', 'b', 'c', 'd'];
 var KEY_UP_RIGHT = ['e', 'f', 'g', 'h'];
 
-var STATE_RIGHT = [39, 1];
+var STATE_RIGHT = 39;
 var STATE_RIGHT_UP = 201;
 var STATE_RIGHT_DOWN = 202;
 var KEY_RIGHT_UP = ['i', 'j', 'k', 'l'];
 var KEY_RIGHT_DOWN = ['m', 'n', 'o', 'p'];
 
-var STATE_DOWN = [40, 2];
+var STATE_DOWN = 40;
 var STATE_DOWN_LEFT = 301;
 var STATE_DOWN_RIGHT = 302;
 var KEY_DOWN_LEFT = ['u', 'v', 'w', 'x'];
 var KEY_DOWN_RIGHT = ['q', 'r', 's', 't'];
 
-var STATE_LEFT = [37, 3];
+var STATE_LEFT = 37;
 var STATE_LEFT_UP = 401;
 var STATE_LEFT_DOWN = 402;
 var KEY_LEFT_UP = ['3', '4', '5', '6'];
 var KEY_LEFT_DOWN = ['y', 'z', '1', '2'];
 
-var KEY_LIST = [KEY_UP_LEFT, KEY_UP_RIGHT, 
-                KEY_RIGHT_UP, KEY_RIGHT_DOWN, 
-                KEY_DOWN_LEFT, KEY_DOWN_RIGHT,
-                KEY_LEFT_UP, KEY_LEFT_DOWN];
-
 var STATE_ROOT = 1000;
+
+var KEY_MAP = {STATE_UP: [KEY_UP_LEFT, KEY_UP_RIGHT],
+			   STATE_RIGHT: [KEY_RIGHT_UP, KEY_RIGHT_DOWN],
+			   STATE_DOWN: [KEY_DOWN_LEFT, KEY_DOWN_RIGHT],
+			   STATE_LEFT: [KEY_LEFT_UP, KEY_LEFT_DOWN]};
 
 var key1 = null;
 var key2 = null;
-var currState = STATE_ROOT;
+var state = STATE_ROOT;
 
 function init()
 {
@@ -45,7 +45,6 @@ function init()
 function keyDown(e)
 {	
 	var code = e.keyCode;
-	var state = currState[0];
 	
 	// if we're at the root state
 	if (state == STATE_ROOT && (code >= STATE_LEFT && code <= STATE_DOWN))
@@ -97,9 +96,10 @@ function updateOptions(s)
 	// if it is one of the four major directions
 	if (s < 100)
 	{
+		key1 = KEY_MAP[s][0];
+		key2 = KEY_MAP[s][1];
+		
 		// We have structured our list and state numbers such that this will always work
-		key1 = KEY_LIST[s[1]];
-		key2 = KEY_LIST[s[1]+1];
 		$('#l-option').val = makeOptionToString(key1);
 		$('#r-option').val = makeOptionToString(key2);
 	}
