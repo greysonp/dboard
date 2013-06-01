@@ -62,18 +62,19 @@ function keyDown(e)
 	// if we're at one of the four major states
 	else if (state < 100)
 	{
+		// If the key pres is in the same direction as the major state, they are inputting the common character
+		if (code == state)
+		{
+			input($('#c-option').val());
+			updateOptions(STATE_ROOT);
+			state = STATE_ROOT;
+		}
+		
 		// one of the major verticals
 		if (state == STATE_UP || state == STATE_DOWN)
 		{
-			// if they're moving in the same direction as the major, then they're selecting the 'most common' item
-			if (code == state)
-			{
-				input($('#c-option').val());
-			}
-			else
-			{
-
-			}
+			
+			
 		}
 		// one of the major horizontals
 		else
@@ -106,6 +107,14 @@ function updateOptions(s)
 
 		// Update "common" letter
 		updateCommon(s);
+	}
+	if (s == STATE_ROOT)
+	{
+		key1 = null;
+		key2 = null;
+		$('#l-option').val("");
+		$('#r-option').val("");
+		updateCommon(STATE_ROOT);
 	}
 }
 
