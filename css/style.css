@@ -1,0 +1,77 @@
+#dboard
+{
+	position: relative;
+	width: 500px;
+	height: 500px;
+	border: 1px solid black;
+}
+
+.minor-node
+{
+	border: 1px solid black;
+	width: 125px;
+	height: 125px;
+}
+
+#root-node
+{
+	position: absolute;
+	left: 245px;
+	top: 245px;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+/**********/
+/*TOP NODE*/
+/**********/
+#top-node
+{
+	position: absolute;
+	top: 0px;
+	left: 250px;
+	border: 2px solid green;
+}
+
+#tl-node
+{
+	position: absolute;
+	top: 0px;
+	left: -175px;
+	border-color: red;
+}
+
+#tr-node
+{
+	position: absolute;
+	top: 0px;
+	right: -175px;
+}
+
+/************/
+/*RIGHT NODE*/
+/************/
+#right-node
+{
+	position: absolute;
+	top: 250px;
+	right: 0px;
+	border: 2px solid green;
+}
+
+#rt-node
+{
+	position: absolute;
+	right: 0px;
+	top: -175px;
+	border-color: red;
+}
+
+#rb-node
+{
+	position: absolute;
+	right: 0px;
+	bottom: -175px;
+}

@@ -10,12 +10,34 @@
 	
 </head>
 <body>
-
 	<h1>D-Board</h1>
 	<div><input type="text" id="input" size="100"></input></div>
-	<input type="text" id="l-option" size="7"></input>
-	<input type="text" id="c-option" size="1"></input>
-	<input type="text" id="r-option" size="7"></input>
-	<div><input type="text" id="m-option" size="7"></input></div>
+
+	<div id="dboard">
+		<div id="root-node"></div>
+	
+		<!-- TOP NODE -->
+		<div id="top-node">
+			<div id="tl-node" class="minor-node">
+				<div id="tl-t"></div>
+				<div id="tl-r"></div>
+				<div id="tl-b"></div>
+				<div id="tl-l"></div>
+			</div>
+			<div id="tr-node" class="minor-node"></div>
+		</div>
+
+		<!-- RIGHT NODE -->
+		<div id="right-node">
+			<div id="rt-node" class="minor-node"></div>
+			<div id="rb-node" class="minor-node"></div>
+		</div>
+
+		<!-- BOTTOM NODE -->
+		<div id="bottom-node"></div>
+
+		<!-- LEFT NODE -->
+		<div id="left-node"></div>
+	</div>	
 </body>
 </html>
