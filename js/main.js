@@ -50,6 +50,8 @@ MINOR_MAP[STATE_DOWN_RIGHT] = KEY_DOWN_RIGHT;
 MINOR_MAP[STATE_LEFT_UP] = KEY_LEFT_UP;
 MINOR_MAP[STATE_LEFT_DOWN] = KEY_LEFT_DOWN;
 
+var keyList = [KEY_UP_LEFT, KEY_UP_RIGHT, KEY_RIGHT_UP, KEY_RIGHT_DOWN, KEY_DOWN_RIGHT, KEY_DOWN_LEFT, KEY_LEFT_DOWN, KEY_LEFT_UP];
+
 var key1 = null;
 var key2 = null;
 var state = STATE_ROOT;
@@ -57,6 +59,7 @@ var state = STATE_ROOT;
 function init()
 {
 	$(document).keydown(keyDown);
+	drawCharacters();
 }
 
 function keyDown(e)
@@ -199,4 +202,15 @@ function input(c)
 function makeOptionToString(a)
 {
 	return a[0] + ' ' + a[1] + ' ' + a[2] + ' ' + a[3];
+}
+
+function drawCharacters()
+{
+	var merged = new Array();
+	for (var i = 0; i < keyList.length; i++)
+		for (var j = 0; j < keyList[i].length; j++)
+			merged.push(keyList[i][j]);
+
+	for (var i = 0; i < 32; i++)
+		$('#c' + i).text(merged[i]);		
 }
