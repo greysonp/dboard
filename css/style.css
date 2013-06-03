@@ -4,6 +4,8 @@
 	width: 500px;
 	height: 500px;
 	border: 1px solid black;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 24px;
 }
 
 .minor-node
@@ -126,4 +128,35 @@
 	position: absolute;
 	left: 0px;
 	bottom: -160px;
+}
+
+/************/
+/*CHARACTERS*/
+/************/
+.c-top
+{
+	position: absolute;
+	top: 0px;
+	left: 58px;
+}
+
+.c-right
+{
+	position: absolute;
+	top: 50px;
+	right: 0px;
+}
+
+.c-left
+{
+	position: absolute;
+	top: 50px;
+	left: 0px;
+}
+
+.c-bottom
+{
+	position: absolute;
+	bottom: 0px;
+	left: 58px;
 }

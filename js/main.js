@@ -81,7 +81,7 @@ function keyDown(e)
 		// If the key press is in the same direction as the major state, they are inputting the common character
 		if (code == state)
 		{
-			input($('#c-option').val());
+			input(key1[0]);
 			updateOptions(STATE_ROOT);
 			state = STATE_ROOT;
 		}
@@ -99,7 +99,6 @@ function keyDown(e)
 				updateOptions(STATE_MAP[state][1]);
 				state = STATE_MAP[state][1];
 			}
-
 		}
 		// one of the major horizontals
 		else if (state == STATE_LEFT || state == STATE_RIGHT)
@@ -155,8 +154,8 @@ function updateOptions(s)
 		key2 = KEY_MAP[s][1];
 
 		// We have structured our list and state numbers such that this will always work
-		$('#l-option').val(makeOptionToString(key1));
-		$('#r-option').val(makeOptionToString(key2));
+		// $('#l-option').val(makeOptionToString(key1));
+		// $('#r-option').val(makeOptionToString(key2));
 
 		// Update "common" letter
 		updateCommon(s);
@@ -166,9 +165,9 @@ function updateOptions(s)
 	{
 		key1 = null;
 		key2 = null;
-		$('#l-option').val("");
-		$('#r-option').val("");
-		$('#m-option').val("");
+		// $('#l-option').val("");
+		// $('#r-option').val("");
+		// $('#m-option').val("");
 		updateCommon(STATE_ROOT);
 	}
 	// if we are entering one of the minor states
@@ -183,13 +182,13 @@ function updateCommon(s)
 	// if it's not a major state, just clear out the box and leave
 	if (s > 100)
 	{
-		$('#c-option').val("");
+		// $('#c-option').val("");
 		return;
 	}
 
 	// Otherwise, let's pick the common letter.
 	// TODO: Actually do this intelligently
-	$('#c-option').val(key1[0]);
+	// $('#c-option').val(key1[0]);
 }
 
 function input(c)
