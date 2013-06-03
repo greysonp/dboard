@@ -1,11 +1,14 @@
-Class.design('DBoard.MajorNode',
+(function()
 {
-	initialize: function(leftSet, rightSet, keyCode, leftCode, rightCode)
+	Class.design('DBoard.MajorNode',
 	{
-		this.leftChild = new DBoard.MinorNode(leftSet);
-		this.rightChild = new DBoard.MinorNOde(rightSet);
-		this.keyCode = keyCode;
-		this.leftCode = leftCode;
-		this.rightCode = rightCode;
-	}
-});
+		initialize: function(leftSet, rightSet, keyCode, leftCode, rightCode)
+		{
+			this.leftChild = new DBoard.MinorNode(leftSet);
+			this.rightChild = new DBoard.MinorNOde(rightSet);
+			this.keyCode = keyCode;
+			this.leftCode = leftCode;
+			this.rightCode = rightCode;
+		}
+	});
+})();

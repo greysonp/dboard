@@ -1,11 +1,14 @@
-Class.design('DBoard.Vals')
+(function()
 {
-	STATIC: 
+	Class.design('DBoard.Vals')
 	{
-		LEFT: 37,
-		UP: 38,
-		RIGHT: 39,
-		DOWN: 40,
-		MIDDLE: 32 // Space bar
+		STATIC: 
+		{
+			LEFT: 37,
+			UP: 38,
+			RIGHT: 39,
+			DOWN: 40,
+			MIDDLE: 32 // Space bar
+		}
 	}
-}
+});
