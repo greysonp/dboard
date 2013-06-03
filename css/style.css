@@ -39,7 +39,7 @@
 {
 	position: absolute;
 	top: 0px;
-	left: -175px;
+	left: -160px;
 	border-color: red;
 }
 
@@ -47,7 +47,7 @@
 {
 	position: absolute;
 	top: 0px;
-	right: -175px;
+	right: -160px;
 }
 
 /************/
@@ -65,7 +65,7 @@
 {
 	position: absolute;
 	right: 0px;
-	top: -175px;
+	top: -160px;
 	border-color: red;
 }
 
@@ -73,5 +73,57 @@
 {
 	position: absolute;
 	right: 0px;
-	bottom: -175px;
+	bottom: -160px;
+}
+
+/*************/
+/*BOTTOM NODE*/
+/*************/
+#bottom-node
+{
+	position: absolute;
+	bottom: 0px;
+	left: 250px;
+	border: 2px solid green;
+}
+
+#bl-node
+{
+	position: absolute;
+	bottom: 0px;
+	left: -160px;
+	border-color: red;
+}
+
+#br-node
+{
+	position: absolute;
+	bottom: 0px;
+	right: -160px;
+}
+
+/***********/
+/*LEFT NODE*/
+/***********/
+#left-node
+{
+	position: absolute;
+	top: 250px;
+	left: 0px;
+	border: 2px solid green;
+}
+
+#lt-node
+{
+	position: absolute;
+	left: 0px;
+	top: -160px;
+	border-color: red;
+}
+
+#lb-node
+{
+	position: absolute;
+	left: 0px;
+	bottom: -160px;
 }
