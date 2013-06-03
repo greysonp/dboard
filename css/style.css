@@ -26,6 +26,16 @@
 	border: 1px solid black;
 }
 
+.major-selected
+{
+	font-weight: bold;
+}
+
+.minor-selected
+{
+	font-color: red;
+}
+
 /**********/
 /*TOP NODE*/
 /**********/

@@ -156,9 +156,7 @@ function updateOptions(s)
 		key1 = KEY_MAP[s][0];
 		key2 = KEY_MAP[s][1];
 
-		// We have structured our list and state numbers such that this will always work
-		// $('#l-option').val(makeOptionToString(key1));
-		// $('#r-option').val(makeOptionToString(key2));
+		highlightMajor(s);
 
 		// Update "common" letter
 		updateCommon(s);
@@ -168,16 +166,36 @@ function updateOptions(s)
 	{
 		key1 = null;
 		key2 = null;
-		// $('#l-option').val("");
-		// $('#r-option').val("");
-		// $('#m-option').val("");
+		$('#top-node').removeClass('major-selected');
+		$('#right-node').removeClass('major-selected');
+		$('#bottom-node').removeClass('major-selected');
+		$('#left-node').removeClass('major-selected');
 		updateCommon(STATE_ROOT);
 	}
 	// if we are entering one of the minor states
 	else
 	{
-		$('#m-option').val(makeOptionToString(MINOR_MAP[s]));
+		
 	}
+}
+
+function highlightMajor(s)
+{
+	// Strip the highlights from everyone
+	$('#top-node').removeClass('major-selected');
+	$('#right-node').removeClass('major-selected');
+	$('#bottom-node').removeClass('major-selected');
+	$('#left-node').removeClass('major-selected');
+
+	// Highlight the correct one
+	if (s == STATE_UP)
+		$('#top-node').addClass('major-selected');
+	else if (s == STATE_RIGHT)
+		$('#right-node').addClass('major-selected');
+	else if (s == STATE_DOWN)
+		$('#bottom-node').addClass('major-selected');
+	else if (s == STATE_LEFT)
+		$('#left-node').addClass('major-selected');
 }
 
 function updateCommon(s)
@@ -197,11 +215,6 @@ function updateCommon(s)
 function input(c)
 {
 	$('#input').val($('#input').val() + c);
-}
-
-function makeOptionToString(a)
-{
-	return a[0] + ' ' + a[1] + ' ' + a[2] + ' ' + a[3];
 }
 
 function drawCharacters()
