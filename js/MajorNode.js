@@ -28,6 +28,11 @@
 				return this.leftChild;
 			else if (keyCode == this.rightCode)
 				return this.rightChild;
+		},
+
+		getCommonChar: function()
+		{
+			return this.leftChild.getChar(DBoard.Vals.UP);
 		}
 	});
 })();

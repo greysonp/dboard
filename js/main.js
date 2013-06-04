@@ -57,39 +57,23 @@ function keyDown(e)
 	// If we have no minor node (i.e. we are at a major node)
 	else if (currentMinor == null)
 	{
-		currentMinor = currentMajor.getMinor(code);
+		// If we press the key that is the same direction as the major node,
+		// we want the common char
+		if (code == currentMajor.keyCode)
+		{
+			input(currentMajor.getCommonChar());
+			reset();
+		}
+		// Otherwise, see if the key press matches a minor node direction and grab that
+		else
+		{
+			currentMinor = currentMajor.getMinor(code);
+		}
 	}
 	else if (currentMinor != null)
 	{
 		input(currentMinor.getChar(code));
 		reset();
-	}
-}
-
-function updateOptions(s)
-{
-	// if it is one of the four major directions
-	if (s < 100)
-	{
-		key1 = KEY_MAP[s][0];
-		key2 = KEY_MAP[s][1];
-
-		highlightMajor(s);
-
-		// Update "common" letter
-		updateCommon(s);
-	}
-	// if we are entering the root state
-	else if (s == STATE_ROOT)
-	{
-		key1 = null;
-		key2 = null;
-		updateCommon(STATE_ROOT);
-	}
-	// if we are entering one of the minor states
-	else
-	{
-
 	}
 }
 
