@@ -54,8 +54,16 @@ function keyDown(e)
 			}
 		}
 	}
-
-
+	// If we have no minor node (i.e. we are at a major node)
+	else if (currentMinor == null)
+	{
+		currentMinor = currentMajor.getMinor(code);
+	}
+	else if (currentMinor != null)
+	{
+		input(currentMinor.getChar(code));
+		reset();
+	}
 }
 
 function updateOptions(s)

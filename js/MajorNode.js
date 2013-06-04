@@ -20,6 +20,14 @@
 		unselect: function()
 		{
 			this.$selector.removeClass('major-selected');
+		},
+
+		getMinor: function(keyCode)
+		{
+			if (keyCode == this.leftCode)
+				return this.leftChild;
+			else if (keyCode == this.rightCode)
+				return this.rightChild;
 		}
 	});
 })();
