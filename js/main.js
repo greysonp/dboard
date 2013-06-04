@@ -12,98 +12,50 @@ var KEY_DOWN_RIGHT = ['q', 'r', 's', 't'];
 var KEY_LEFT_UP = ['3', '4', '5', '6'];
 var KEY_LEFT_DOWN = ['y', 'z', '1', '2'];
 
+// Makes drawing out the visual way easier
 var keyList = [KEY_UP_LEFT, KEY_UP_RIGHT, KEY_RIGHT_UP, KEY_RIGHT_DOWN, KEY_DOWN_RIGHT, KEY_DOWN_LEFT, KEY_LEFT_DOWN, KEY_LEFT_UP];
+
+var majorNodes = new Array();
+
+var currentMajor = null;
+var currentMinor = null;
 
 function init()
 {
+	initNodes();
 	$(document).keydown(keyDown);
 	drawCharacters();
+}
+
+function initNodes()
+{
+	// Creates all of our major nodes
+	majorNodes.push(new DBoard.MajorNode(KEY_UP_LEFT, KEY_UP_RIGHT, DBoard.Vals.UP, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#top-node')));			// Top
+	majorNodes.push(new DBoard.MajorNode(KEY_RIGHT_UP, KEY_RIGHT_DOWN, DBoard.Vals.RIGHT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#right-node')));		// Right
+	majorNodes.push(new DBoard.MajorNode(KEY_DOWN_LEFT, KEY_DOWN_RIGHT, DBoard.Vals.DOWN, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#bottom-node')));	// Bottom
+	majorNodes.push(new DBoard.MajorNode(KEY_LEFT_UP, KEY_LEFT_DOWN, DBoard.Vals.LEFT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#left-node')));			// Left
 }
 
 function keyDown(e)
 {	
 	var code = e.keyCode;
 	
-	// if we're at the root state
-	if (state == STATE_ROOT && (code >= STATE_LEFT && code <= STATE_DOWN))
+	// If we have no major node (i.e. we are at the root)
+	if (currentMajor == null)
 	{
-		updateOptions(code);
-		state = code;
-		console.log("STATE: " + state);
+		// Go through the list of major nodes
+		for (var i = 0; i < majorNodes.length; i++)
+		{
+			// If we find one whose keycode matches the key pressed, select it
+			if (majorNodes[i].keyCode == code)
+			{
+				selectMajor(majorNodes[i])
+				break;
+			}
+		}
 	}
-	// center key pressed
-	else if (state == STATE_ROOT && code == SPACE_CODE)
-	{
 
-	}
-	// if we're at one of the four major states
-	else if (state < 100)
-	{
-		// If the key press is in the same direction as the major state, they are inputting the common character
-		if (code == state)
-		{
-			input(key1[0]);
-			updateOptions(STATE_ROOT);
-			state = STATE_ROOT;
-		}
-		
-		// one of the major verticals
-		if (state == STATE_UP || state == STATE_DOWN)
-		{
-			if (code == STATE_LEFT)
-			{
-				updateOptions(STATE_MAP[state][0]);
-				state = STATE_MAP[state][0];
-			}
-			else if (code == STATE_RIGHT)
-			{
-				updateOptions(STATE_MAP[state][1]);
-				state = STATE_MAP[state][1];
-			}
-		}
-		// one of the major horizontals
-		else if (state == STATE_LEFT || state == STATE_RIGHT)
-		{
-			if (code == STATE_UP)
-			{
-				updateOptions(STATE_MAP[state][0]);
-				state = STATE_MAP[state][0];
-			}
-			else if (code == STATE_DOWN)
-			{
-				updateOptions(STATE_MAP[state][1]);
-				state = STATE_MAP[state][1];
-			}
-		}
-	}
-	// if we're in one of the eight minor states
-	else
-	{
-		if (code == STATE_UP)
-		{
-			input(MINOR_MAP[state][0]);
-			updateOptions(STATE_ROOT);
-			state = STATE_ROOT;
-		}
-		else if (code == STATE_RIGHT)
-		{
-			input(MINOR_MAP[state][1]);
-			updateOptions(STATE_ROOT);
-			state = STATE_ROOT;
-		}
-		else if (code == STATE_DOWN)
-		{
-			input(MINOR_MAP[state][2]);
-			updateOptions(STATE_ROOT);
-			state = STATE_ROOT;
-		}
-		else if (code == STATE_LEFT)
-		{
-			input(MINOR_MAP[state][3]);
-			updateOptions(STATE_ROOT);
-			state = STATE_ROOT;
-		}
-	}
+
 }
 
 function updateOptions(s)
@@ -124,36 +76,36 @@ function updateOptions(s)
 	{
 		key1 = null;
 		key2 = null;
-		$('#top-node').removeClass('major-selected');
-		$('#right-node').removeClass('major-selected');
-		$('#bottom-node').removeClass('major-selected');
-		$('#left-node').removeClass('major-selected');
 		updateCommon(STATE_ROOT);
 	}
 	// if we are entering one of the minor states
 	else
 	{
-		
+
 	}
 }
 
-function highlightMajor(s)
+function selectMajor(major)
 {
 	// Strip the highlights from everyone
-	$('#top-node').removeClass('major-selected');
-	$('#right-node').removeClass('major-selected');
-	$('#bottom-node').removeClass('major-selected');
-	$('#left-node').removeClass('major-selected');
+	for (var i = 0; i < majorNodes.length; i++)
+		majorNodes[i].unselect();
 
 	// Highlight the correct one
-	if (s == STATE_UP)
-		$('#top-node').addClass('major-selected');
-	else if (s == STATE_RIGHT)
-		$('#right-node').addClass('major-selected');
-	else if (s == STATE_DOWN)
-		$('#bottom-node').addClass('major-selected');
-	else if (s == STATE_LEFT)
-		$('#left-node').addClass('major-selected');
+	major.select();
+
+	currentMajor = major;
+}
+
+function reset()
+{
+	// Clear out majors and minors
+	currentMajor = null;
+	currentMinor = null;
+
+	// Unselect everything
+	for (var i = 0; i < majorNodes.length; i++)
+		majorNodes[i].unselect();
 }
 
 function updateCommon(s)

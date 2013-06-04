@@ -1,6 +1,6 @@
 (function()
 {
-	Class.design('DBoard.Vals')
+	Class.design('DBoard.Vals',
 	{
 		STATIC: 
 		{
@@ -10,5 +10,5 @@
 			DOWN: 40,
 			MIDDLE: 32 // Space bar
 		}
-	}
-});
+	});
+})();
