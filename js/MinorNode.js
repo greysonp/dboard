@@ -2,9 +2,10 @@
 {
 	Class.design('DBoard.MinorNode',
 	{
-		initialize: function(charSet)
+		initialize: function(charSet, $selector)
 		{
 			this.charSet = charSet;
+			this.$selector = $selector;
 		},
 
 		getChar: function(keyCode)
@@ -17,6 +18,16 @@
 				case DBoard.Vals.LEFT: return this.charSet[3]; break;
 			}
 			return null;
+		},
+
+		select: function()
+		{
+			this.$selector.addClass('minor-selected');
+		},
+
+		unselect: function()
+		{
+			this.$selector.removeClass('minor-selected');
 		}
 	});
 })();

@@ -15,13 +15,16 @@
 </head>
 <body>
 	<h1>D-Board</h1>
-	<div><input type="text" id="input" size="100"></input></div>
+	<p>For those times when all you have is 4 directions.</p>
+	<div id="input-div"><input type="text" id="input" size="100"></input></div>
 
 	<div id="dboard">
-		<div id="root-node"></div>
+		<div id="rl-diag"></div>
+		<div id="lr-diag"></div>
 	
 		<!-- TOP NODE -->
 		<div id="top-node">
+			<div id="common-top" class="common">X</div>
 			<div id="tl-node" class="minor-node">
 				<div id="c0" class="c-top"></div>
 				<div id="c1" class="c-right"></div>
@@ -38,6 +41,7 @@
 
 		<!-- RIGHT NODE -->
 		<div id="right-node">
+			<div id="common-right" class="common">X</div>
 			<div id="rt-node" class="minor-node">
 				<div id="c8" class="c-top"></div>
 				<div id="c9" class="c-right"></div>
@@ -54,6 +58,7 @@
 
 		<!-- BOTTOM NODE -->
 		<div id="bottom-node">
+			<div id="common-bottom" class="common">X</div>
 			<div id="br-node" class="minor-node">
 				<div id="c16" class="c-top"></div>
 				<div id="c17" class="c-right"></div>
@@ -70,6 +75,7 @@
 
 		<!-- LEFT NODE -->
 		<div id="left-node">
+			<div id="common-left" class="common">X</div>
 			<div id="lb-node" class="minor-node">
 				<div id="c24" class="c-top"></div>
 				<div id="c25" class="c-right"></div>

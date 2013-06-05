@@ -9,7 +9,7 @@ var KEY_RIGHT_DOWN = ['m', 'n', 'o', 'p'];
 var KEY_DOWN_LEFT = ['u', 'v', 'w', 'x'];
 var KEY_DOWN_RIGHT = ['q', 'r', 's', 't'];
 
-var KEY_LEFT_UP = ['3', '4', '5', '6'];
+var KEY_LEFT_UP = ['3', '4', '5', ' '];
 var KEY_LEFT_DOWN = ['y', 'z', '1', '2'];
 
 // Makes drawing out the visual way easier
@@ -30,10 +30,10 @@ function init()
 function initNodes()
 {
 	// Creates all of our major nodes
-	majorNodes.push(new DBoard.MajorNode(KEY_UP_LEFT, KEY_UP_RIGHT, DBoard.Vals.UP, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#top-node')));			// Top
-	majorNodes.push(new DBoard.MajorNode(KEY_RIGHT_UP, KEY_RIGHT_DOWN, DBoard.Vals.RIGHT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#right-node')));		// Right
-	majorNodes.push(new DBoard.MajorNode(KEY_DOWN_LEFT, KEY_DOWN_RIGHT, DBoard.Vals.DOWN, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#bottom-node')));	// Bottom
-	majorNodes.push(new DBoard.MajorNode(KEY_LEFT_UP, KEY_LEFT_DOWN, DBoard.Vals.LEFT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#left-node')));			// Left
+	majorNodes.push(new DBoard.MajorNode(KEY_UP_LEFT, $('#tl-node'), KEY_UP_RIGHT, $('#tr-node'), DBoard.Vals.UP, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#top-node'), $('#common-top')));			// Top
+	majorNodes.push(new DBoard.MajorNode(KEY_RIGHT_UP, $('#rt-node'), KEY_RIGHT_DOWN, $('#rb-node'), DBoard.Vals.RIGHT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#right-node'), $("#common-right")));		// Right
+	majorNodes.push(new DBoard.MajorNode(KEY_DOWN_LEFT, $('#bl-node'), KEY_DOWN_RIGHT, $('#br-node'), DBoard.Vals.DOWN, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#bottom-node'), $("#common-bottom")));	// Bottom
+	majorNodes.push(new DBoard.MajorNode(KEY_LEFT_UP, $('#lt-node'), KEY_LEFT_DOWN, $('#lb-node'), DBoard.Vals.LEFT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#left-node'), $("#common-left")));			// Left
 }
 
 function keyDown(e)
@@ -68,6 +68,7 @@ function keyDown(e)
 		else
 		{
 			currentMinor = currentMajor.getMinor(code);
+			currentMinor.select();
 		}
 	}
 	else if (currentMinor != null)
@@ -91,13 +92,14 @@ function selectMajor(major)
 
 function reset()
 {
-	// Clear out majors and minors
-	currentMajor = null;
-	currentMinor = null;
-
 	// Unselect everything
 	for (var i = 0; i < majorNodes.length; i++)
 		majorNodes[i].unselect();
+	currentMinor.unselect();
+
+	// Clear out majors and minors
+	currentMajor = null;
+	currentMinor = null;
 }
 
 function updateCommon(s)
@@ -127,5 +129,8 @@ function drawCharacters()
 			merged.push(keyList[i][j]);
 
 	for (var i = 0; i < 32; i++)
-		$('#c' + i).text(merged[i]);		
+		$('#c' + i).text(merged[i]);	
+
+	for (var i = 0; i < majorNodes.length; i++)
+		majorNodes[i].updateCommon();
 }
