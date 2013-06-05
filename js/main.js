@@ -95,7 +95,8 @@ function reset()
 	// Unselect everything
 	for (var i = 0; i < majorNodes.length; i++)
 		majorNodes[i].unselect();
-	currentMinor.unselect();
+	if (currentMinor)
+		currentMinor.unselect();
 
 	// Clear out majors and minors
 	currentMajor = null;
