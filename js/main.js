@@ -19,12 +19,21 @@ var majorNodes = new Array();
 
 var currentMajor = null;
 var currentMinor = null;
+var auto = null;
 
 function init()
 {
-	initNodes();
-	$(document).keydown(keyDown);
-	drawCharacters();
+	// We can only do stuff after the autocomplete has loaded its dictionary
+	auto = new DBoard.AutoComplete(function()
+	{
+		initNodes();
+		$(document).keydown(keyDown);
+		drawCharacters();
+
+		// Some tests
+		auto.update("th");
+		console.log(auto.getCommon(KEY_UP_LEFT, KEY_UP_RIGHT));
+	});
 }
 
 function initNodes()
