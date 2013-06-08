@@ -31,14 +31,14 @@
 				return this.rightChild;
 		},
 
-		getCommonChar: function()
+		getCommon: function()
 		{
-			return this.leftChild.getChar(DBoard.Vals.UP);
+			return this.$common.text();
 		},
 
-		updateCommon: function()
+		updateCommon: function(c)
 		{
-			this.$common.text(this.leftChild.getChar(DBoard.Vals.UP));
+			this.$common.text(c);
 		}
 	});
 })();

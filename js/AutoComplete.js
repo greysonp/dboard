@@ -23,19 +23,26 @@
 		update: function(currWord)
 		{
 			var newDictionary = new Array();
-
-			// Find the index at which we need to start copying
-			var i = 0;
-			while (this.currDictionary[i] < currWord && i < this.currDictionary.length)
-				i++;
-
-			// Copy over all of the values that start with our currWord
-			while (this.currDictionary[i].indexOf(currWord) == 0 && i < this.currDictionary.length)
+			if (currWord.length > 0 && currWord != " ")
 			{
-				newDictionary.push(this.currDictionary[i]);
-				i++;
+				// Find the index at which we need to start copying
+				var i = 0;
+				while (i < this.currDictionary.length && this.currDictionary[i] < currWord)
+					i++;
+
+				// Copy over all of the values that start with our currWord
+				while (i < this.currDictionary.length && this.currDictionary[i].indexOf(currWord) == 0)
+				{
+					newDictionary.push(this.currDictionary[i]);
+					i++;
+				}
+				console.log("new: " + newDictionary);
 			}
-			console.log("new: " + newDictionary);
+			else
+			{
+				newDictionary = this.dictionary;
+			}
+			console.log(newDictionary);
 
 			// Now lets update our character counts
 			this.charCount = new Array();
@@ -53,14 +60,14 @@
 			this.currDictionary = newDictionary;
 		},
 
-		getCommon: function (set1, set2)
+		getCommon: function (node)
 		{
-			var set = set1.concat(set2);
+			var set = node.leftChild.charSet.concat(node.rightChild.charSet);
 
 			var winner = set[0];
 			for (var i = 1; i < set.length; i++)
 			{
-				if (this.charCount[set[i]] && this.charCount[set[i]] > this.charCount[winner])
+				if (this.charCount[set[i]] && (this.charCount[winner] == null || this.charCount[set[i]] > this.charCount[winner]))
 						winner = set[i];
 			}
 			return winner;
@@ -70,6 +77,9 @@
 		{
 			this.currDictionary == this.dictionary;
 			this.charCount = new Array();
+
+			// Fill in a clean set of data to grab
+			this.update(" ");
 		}
 	});
 })();

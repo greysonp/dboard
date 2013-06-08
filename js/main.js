@@ -28,11 +28,17 @@ function init()
 	{
 		initNodes();
 		$(document).keydown(keyDown);
+		$(document).keyup(keyUp);
 		drawCharacters();
 
+		keyUp(null);
+
 		// Some tests
-		auto.update("th");
-		console.log(auto.getCommon(KEY_UP_LEFT, KEY_UP_RIGHT));
+		// auto.update("th");
+		// console.log(auto.getCommon(majorNodes[0]));
+
+		// auto.update("the");
+		// console.log(auto.getCommon(majorNodes[0]));
 	});
 }
 
@@ -43,6 +49,50 @@ function initNodes()
 	majorNodes.push(new DBoard.MajorNode(KEY_RIGHT_UP, $('#rt-node'), KEY_RIGHT_DOWN, $('#rb-node'), DBoard.Vals.RIGHT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#right-node'), $("#common-right")));		// Right
 	majorNodes.push(new DBoard.MajorNode(KEY_DOWN_LEFT, $('#bl-node'), KEY_DOWN_RIGHT, $('#br-node'), DBoard.Vals.DOWN, DBoard.Vals.LEFT, DBoard.Vals.RIGHT, $('#bottom-node'), $("#common-bottom")));	// Bottom
 	majorNodes.push(new DBoard.MajorNode(KEY_LEFT_UP, $('#lt-node'), KEY_LEFT_DOWN, $('#lb-node'), DBoard.Vals.LEFT, DBoard.Vals.UP, DBoard.Vals.DOWN, $('#left-node'), $("#common-left")));			// Left
+}
+
+function keyUp(e)
+{
+	var s = lastWord($('#input').val());
+	if (s == "") s = " ";
+
+	// if it's a space, we'll reset it and give the raw common char
+	if (s == " ")
+	{
+		console.log("We've got a space.");
+		auto.reset();
+		for (var i = 0; i < majorNodes.length; i++)
+		{
+			var comp = auto.getCommon(majorNodes[i]);
+			console.log("i: " + comp);
+			majorNodes[i].updateCommon(comp);
+		}	
+	}
+	// if it's a punctuation, we'll mandate that space is the given autocomplete for the space side
+	else if (isPunctuation(s))
+	{
+		auto.reset();
+		for (var i = 0; i < majorNodes.length; i++)
+		{
+			var comp = auto.getCommon(majorNodes[i]);
+			console.log("i: " + comp);
+
+			majorNodes[i].updateCommon(comp);
+		}
+		majorNodes[3].updateCommon(' ');
+	}
+	else
+	{
+		auto.update(s);
+		for (var i = 0; i < majorNodes.length; i++)
+		{
+			var comp = auto.getCommon(majorNodes[i]);
+			console.log("i: " + comp);
+
+			majorNodes[i].updateCommon(comp);
+		}
+	}
+	console.log(s)
 }
 
 function keyDown(e)
@@ -70,7 +120,7 @@ function keyDown(e)
 		// we want the common char
 		if (code == currentMajor.keyCode)
 		{
-			input(currentMajor.getCommonChar());
+			input(currentMajor.getCommon());
 			reset();
 		}
 		// Otherwise, see if the key press matches a minor node direction and grab that
@@ -112,20 +162,6 @@ function reset()
 	currentMinor = null;
 }
 
-function updateCommon(s)
-{
-	// if it's not a major state, just clear out the box and leave
-	if (s > 100)
-	{
-		// $('#c-option').val("");
-		return;
-	}
-
-	// Otherwise, let's pick the common letter.
-	// TODO: Actually do this intelligently
-	// $('#c-option').val(key1[0]);
-}
-
 function input(c)
 {
 	$('#input').val($('#input').val() + c);
@@ -144,3 +180,35 @@ function drawCharacters()
 	for (var i = 0; i < majorNodes.length; i++)
 		majorNodes[i].updateCommon();
 }
+
+function lastWord(line)
+{
+	// if the last char is a space, return a space
+	if (line.charAt(line.length - 1) == ' ')
+		return ' ';
+
+	// if the last char is a punctuation, return that punctuation
+	else if (isPunctuation(line.charAt(line.length - 1)))
+		return line.charAt(line.length - 1);
+
+	// otherwise, return that last alpha-numeric token
+	else
+	{
+		var split = line.split(/\W+/);
+		var last = split[split.length - 1];
+		return last;
+	}
+}
+
+function isPunctuation(c)
+{
+	var punc = ['.', '?', '!', ',', '"', ')', '>'];
+	
+	for (var i = 0; i < punc.length; i++)
+		if (c == punc[i])
+			return true;
+
+	return false;
+}
+
+
