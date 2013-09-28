@@ -10,7 +10,7 @@
 
 			// Parse our dictionary and store it in an array
 			var that = this;
-			$.get('dictionary.txt', function(content)
+			$.get('../dictionary.txt', function(content)
 			{
 				that.dictionary = content.split('\n');
 				for (var i = 0; i < that.dictionary.length; i++)
